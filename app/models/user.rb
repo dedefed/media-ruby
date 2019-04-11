@@ -2,7 +2,10 @@ class User < ActiveRecord::Base
   rolify
   after_create :assign_default_role
   before_create :assign_default_state
-  enum state: [:active, :remove, :inactive, :queued]
+  STATE_ACTIVE = 'active'
+  STATE_INACTIVE = 'inactive'
+  STATE_REMOVED = 'removed'
+  STATE_QUEUED = 'queued'
   has_many :articles
   validates :firstname, presence: true, length: {minimum:3, maximum: 50}
   validates :lastname, presence: true, length: {minimum:3, maximum: 50}
@@ -14,8 +17,9 @@ class User < ActiveRecord::Base
   validates :password, presence: true, confirmation: true, length: {minimum:3, maximum: 50}, on: :create
   has_secure_password
   def assign_default_role
-    self.add_role(:queued) if self.roles.blank?
+    self.add_role(:user) if self.roles.blank?
   end
   def assign_default_state
+    self.state = STATE_QUEUED if self.state.blank?
   end
 end

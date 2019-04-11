@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_10_030641) do
+ActiveRecord::Schema.define(version: 2019_04_10_160923) do
 
   create_table "articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "title", null: false
@@ -36,6 +36,12 @@ ActiveRecord::Schema.define(version: 2019_04_10_030641) do
     t.bigint "category_id"
     t.index ["article_id"], name: "index_categorizations_on_article_id"
     t.index ["category_id"], name: "index_categorizations_on_category_id"
+  end
+
+  create_table "category_parents", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.bigint "parent_id"
+    t.integer "child_id"
+    t.index ["parent_id"], name: "index_category_parents_on_parent_id"
   end
 
   create_table "roles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -72,4 +78,5 @@ ActiveRecord::Schema.define(version: 2019_04_10_030641) do
   add_foreign_key "articles", "users"
   add_foreign_key "categorizations", "articles"
   add_foreign_key "categorizations", "categories"
+  add_foreign_key "category_parents", "categories", column: "parent_id"
 end
