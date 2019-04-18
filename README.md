@@ -1,5 +1,2 @@
 # README
-
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
+Underconstruct : testing ruby on rails by implementing a complete Rest-API for media. I will also include ACL design logic
